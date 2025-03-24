@@ -1,0 +1,18 @@
+<form class="d-flex flex-column vw30 pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()">
+
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput id="name" formControlName="name" type="text" />
+    <mat-icon matSuffix>account_box</mat-icon>
+    <mat-hint>Enter your hero name</mat-hint>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Description</mat-label>
+    <textarea matInput id="description" formControlName="description"></textarea>
+    <mat-hint>Enter your description</mat-hint>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="heroForm.invalid">Save</button>
+
+</form>
