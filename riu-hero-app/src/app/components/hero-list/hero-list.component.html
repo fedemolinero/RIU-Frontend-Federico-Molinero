@@ -1,27 +1,35 @@
-<div class="d-flex pad-1">
-
+<div class="container">
   <div *ngIf="isLoading$ | async" class="loading-spinner">
     <mat-spinner></mat-spinner>
   </div>
 
-  <div class="d-flex pad-1">
-    <button mat-raised-button color="primary" routerLink="/add-hero">Add Hero</button>
-    <mat-form-field appearance="outline">
-      <mat-label>Search heroes</mat-label>
-      <input matInput type="text" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
-    </mat-form-field>
+  <div class="card">
+    <div class="actions">
+      <button mat-raised-button color="primary" routerLink="/add-hero">Add Hero</button>
+      <mat-form-field appearance="outline">
+        <mat-label>Search heroes</mat-label>
+        <input matInput type="text" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
+      </mat-form-field>
+    </div>
+
+    <div *ngIf="noHeroesMessage" class="notification">
+      {{ noHeroesMessage }}
+    </div>
+
+    <div *ngIf="noSearchResultsMessage" class="notification">
+      {{ noSearchResultsMessage }}
+    </div>
+
+    <mat-list *ngIf="!noHeroesMessage && !noSearchResultsMessage">
+      <mat-list-item *ngFor="let hero of filteredHeroes">
+        <span mat-line>{{ hero.name }}</span>
+        <button mat-icon-button color="accent" [routerLink]="['/edit-hero', hero.id]">
+          <mat-icon>edit</mat-icon>
+        </button>
+        <button mat-icon-button color="warn" (click)="deleteHero(hero.id)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
+    </mat-list>
   </div>
-
-  <mat-list class="d-flex pad-1">
-    <mat-list-item *ngFor="let hero of filteredHeroes">
-      <span mat-line>{{ hero.name }}</span>
-      <button mat-icon-button color="accent" [routerLink]="['/edit-hero', hero.id]">
-        <mat-icon>edit</mat-icon>
-      </button>
-      <button mat-icon-button color="warn" (click)="deleteHero(hero.id)">
-        <mat-icon>delete</mat-icon>
-      </button>
-    </mat-list-item>
-  </mat-list>
-
 </div>

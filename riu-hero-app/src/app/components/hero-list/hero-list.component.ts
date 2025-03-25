@@ -30,6 +30,8 @@ export class HeroListComponent implements OnInit {
   filteredHeroes: Hero[] = [];
   searchQuery = '';
   isLoading$ = this.loadingService.isLoading$;
+  noHeroesMessage = '';
+  noSearchResultsMessage = '';
 
   constructor(
     private heroService: HeroService,
@@ -40,11 +42,16 @@ export class HeroListComponent implements OnInit {
     this.heroService.getHeroes().subscribe((heroes) => {
       this.heroes = heroes;
       this.filteredHeroes = heroes;
+      this.noHeroesMessage = heroes.length === 0 ? 'No heroes available.' : '';
     });
   }
 
   filterHeroes(): void {
     this.filteredHeroes = this.heroService.searchHeroes(this.searchQuery);
+    this.noSearchResultsMessage =
+      this.filteredHeroes.length === 0 && this.searchQuery
+        ? 'No heroes match your search.'
+        : '';
   }
 
   deleteHero(id: number): void {
