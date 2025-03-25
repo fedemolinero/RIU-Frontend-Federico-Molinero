@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 export interface Hero {
   id: number;
@@ -11,7 +12,6 @@ export interface Hero {
   providedIn: 'root',
 })
 export class HeroService {
-
   private readonly initialHeroes: ReadonlyArray<Hero> = [
     // Example heroes can be uncommented for testing
     // { id: 0, name: 'Test Hero', description: 'Test Description' },
@@ -23,7 +23,9 @@ export class HeroService {
 
   // Returns an observable of the heroes list
   getHeroes(): Observable<Hero[]> {
-    return this.heroesSubject.asObservable();
+    return this.heroesSubject.asObservable().pipe(
+      map((heroes) => [...heroes]) // Ensure immutability
+    );
   }
 
   // Finds a hero by ID or throws an error if not found
@@ -37,28 +39,24 @@ export class HeroService {
 
   // Adds a new hero to the list
   addHero(hero: Hero): void {
-    this.heroes.push({ ...hero, id: Date.now() });
-    this.heroesSubject.next(this.heroes);
+    const newHero = { ...hero, id: Date.now() };
+    this.heroesSubject.next([...this.heroesSubject.value, newHero]);
   }
 
   // Updates an existing hero by ID
   updateHero(updatedHero: Hero): void {
-    const index = this.heroes.findIndex((hero) => hero.id === updatedHero.id);
-    if (index === -1) {
-      throw new Error(`Hero with ID ${updatedHero.id} not found`);
-    }
-    this.heroes[index] = updatedHero;
-    this.heroesSubject.next(this.heroes);
+    const updatedHeroes = this.heroesSubject.value.map((hero) =>
+      hero.id === updatedHero.id ? updatedHero : hero
+    );
+    this.heroesSubject.next(updatedHeroes);
   }
 
   // Deletes a hero by ID
   deleteHero(id: number): void {
-    const initialLength = this.heroes.length;
-    this.heroes = this.heroes.filter((hero) => hero.id !== id);
-    if (this.heroes.length === initialLength) {
-      throw new Error(`Hero with ID ${id} not found`);
-    }
-    this.heroesSubject.next(this.heroes);
+    const updatedHeroes = this.heroesSubject.value.filter(
+      (hero) => hero.id !== id
+    );
+    this.heroesSubject.next(updatedHeroes);
   }
 
   // Searches heroes by name
@@ -68,5 +66,4 @@ export class HeroService {
       hero.name.toLowerCase().includes(lowerCaseQuery)
     );
   }
-
 }

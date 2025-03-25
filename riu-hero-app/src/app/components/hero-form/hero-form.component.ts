@@ -15,6 +15,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { UppercaseDirective } from '../../directives/uppercase.directive';
 import { CommonModule } from '@angular/common';
+import { switchMap, of, map } from 'rxjs';
 
 @Component({
   selector: 'app-hero-form',
@@ -50,13 +51,17 @@ export class HeroFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.heroId = Number(this.route.snapshot.paramMap.get('id'));
-    if (this.heroId) {
-      const hero = this.heroService.getHeroById(this.heroId);
-      if (hero) {
-        this.heroForm.patchValue(hero);
-      }
-    }
+    this.route.paramMap
+      .pipe(
+        map((params) => Number(params.get('id'))),
+        switchMap((id) => (id ? of(this.heroService.getHeroById(id)) : of(null)))
+      )
+      .subscribe((hero) => {
+        if (hero) {
+          this.heroForm.patchValue(hero);
+          this.heroId = hero.id;
+        }
+      });
   }
 
   saveHero(): void {
