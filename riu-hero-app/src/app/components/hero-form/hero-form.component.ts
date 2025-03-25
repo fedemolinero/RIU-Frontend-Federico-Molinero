@@ -8,15 +8,17 @@ import {
   Validators,
 } from '@angular/forms';
 import { Hero, HeroService } from '../../services/hero.service';
-import { ChangeDetectionStrategy } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
+import { UppercaseDirective } from '../../directives/uppercase.directive';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-hero-form',
+  standalone: true,
   templateUrl: './hero-form.component.html',
   styleUrls: ['./hero-form.component.scss'],
   imports: [
@@ -24,12 +26,12 @@ import { MatButtonModule } from '@angular/material/button';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    CommonModule,
+    UppercaseDirective,
     MatCardModule,
     MatButtonModule,
-    FormsModule
+    FormsModule,
   ],
-  changeDetection: ChangeDetectionStrategy.OnPush,
-  standalone: true,
 })
 export class HeroFormComponent implements OnInit {
   heroForm: FormGroup;

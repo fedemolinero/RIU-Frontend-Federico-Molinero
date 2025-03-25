@@ -1,8 +1,8 @@
 import { UppercaseDirective } from './uppercase.directive';
-import { NgControl } from '@angular/forms';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { Component } from '@angular/core';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ElementRef } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   template: `<input [(ngModel)]="testInput" appUppercase />`,
@@ -14,24 +14,40 @@ class TestComponent {
 describe('UppercaseDirective', () => {
   let fixture: ComponentFixture<TestComponent>;
   let inputElement: HTMLInputElement;
+  let directive: UppercaseDirective;
+  let mockElementRef: ElementRef;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [UppercaseDirective, TestComponent],
-      imports: [FormsModule, ReactiveFormsModule],
-      providers: [{ provide: NgControl, useValue: { control: { setValue: jasmine.createSpy('setValue') } } }],
+      declarations: [TestComponent],
+      imports: [UppercaseDirective, FormsModule],
+      providers: [
+      ],
     });
 
     fixture = TestBed.createComponent(TestComponent);
     fixture.detectChanges();
     inputElement = fixture.nativeElement.querySelector('input');
+
+    mockElementRef = {
+      nativeElement: {
+        value: '',
+      },
+    } as ElementRef;
+    directive = new UppercaseDirective(mockElementRef);
+  });
+
+  it('should create an instance', () => {
+    expect(directive).toBeTruthy();
   });
 
   it('should convert input value to uppercase', () => {
-    inputElement.value = 'test';
-    inputElement.dispatchEvent(new Event('input'));
-    fixture.detectChanges();
-
-    expect(inputElement.value).toBe('TEST');
+    const mockEvent = {
+      target: {
+        value: 'test',
+      },
+    };
+    directive.onInput(mockEvent);
+    expect(mockElementRef.nativeElement.value).toBe('TEST');
   });
 });

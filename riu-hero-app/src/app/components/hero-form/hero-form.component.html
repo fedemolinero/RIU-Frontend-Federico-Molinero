@@ -2,10 +2,9 @@
   <div class="card">
     <form class="d-flex flex-column vw30 pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()">
 
-
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput id="name" formControlName="name" type="text" appUppercase />
+        <input matInput id="name" formControlName="name" type="text" uppercase />
         <mat-hint>Enter your hero name</mat-hint>
       </mat-form-field>
 
