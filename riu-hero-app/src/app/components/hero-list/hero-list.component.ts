@@ -60,7 +60,7 @@ export class HeroListComponent implements OnInit {
       setTimeout(() => {
         this.heroService.deleteHero(id);
         this.loadingService.hide();
-      }, 1000); // Simulate delay for demonstration
+      }, 2000); // Simulate delay for demonstration
     }
   }
 }

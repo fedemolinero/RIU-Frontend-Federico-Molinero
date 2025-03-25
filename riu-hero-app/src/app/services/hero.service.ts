@@ -37,7 +37,7 @@ export class HeroService {
 
   // Adds a new hero to the list
   addHero(hero: Hero): void {
-    this.heroes.push({ ...hero });
+    this.heroes.push({ ...hero, id: Date.now() });
     this.heroesSubject.next(this.heroes);
   }
 
