@@ -17,9 +17,11 @@
       <input matInput type="text" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
     </mat-form-field>
 
-    <mat-list *ngIf="!noHeroesMessage && !noSearchResultsMessage">
+    <mat-paginator [length]="filteredHeroes.length" [pageSize]="4" [pageSizeOptions]="[4]" (page)="onPageChange($event)">
+    </mat-paginator>
 
-      <mat-list-item *ngFor="let hero of filteredHeroes" class="full-width">
+    <mat-list *ngIf="!noHeroesMessage && !noSearchResultsMessage">
+      <mat-list-item *ngFor="let hero of paginatedHeroes" class="full-width">
         <div class="hero-item-content">
           <div class="hero-text">
             <mat-icon matListItemIcon>bolt</mat-icon>
@@ -35,7 +37,6 @@
           </div>
         </div>
       </mat-list-item>
-
     </mat-list>
 
     <mat-divider></mat-divider>

@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatDividerModule } from '@angular/material/divider';
+import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
 
 @Component({
   selector: 'app-hero-list',
@@ -22,6 +23,7 @@ import { MatDividerModule } from '@angular/material/divider';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
+    MatPaginatorModule,
     MatListModule,
     MatProgressSpinnerModule,
   ],
@@ -34,6 +36,9 @@ export class HeroListComponent implements OnInit {
   isLoading$ = this.loadingService.isLoading$;
   noHeroesMessage = '';
   noSearchResultsMessage = '';
+  paginatedHeroes: Hero[] = [];
+  pageSize = 4;
+  currentPage = 0;
 
   constructor(
     private heroService: HeroService,
@@ -45,6 +50,7 @@ export class HeroListComponent implements OnInit {
       this.heroes = heroes;
       this.filteredHeroes = heroes;
       this.noHeroesMessage = heroes.length === 0 ? 'No heroes available.' : '';
+      this.updatePaginatedHeroes();
     });
   }
 
@@ -54,6 +60,7 @@ export class HeroListComponent implements OnInit {
       this.filteredHeroes.length === 0 && this.searchQuery
         ? 'No heroes match your search.'
         : '';
+    this.updatePaginatedHeroes();
   }
 
   deleteHero(id: number): void {
@@ -64,5 +71,17 @@ export class HeroListComponent implements OnInit {
         this.loadingService.hide();
       }, 200); // Simulate delay for demonstration
     }
+  }
+
+  onPageChange(event: PageEvent): void {
+    this.currentPage = event.pageIndex;
+    this.pageSize = event.pageSize;
+    this.updatePaginatedHeroes();
+  }
+
+   updatePaginatedHeroes(): void {
+    const startIndex = this.currentPage * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+    this.paginatedHeroes = this.filteredHeroes.slice(startIndex, endIndex);
   }
 }
