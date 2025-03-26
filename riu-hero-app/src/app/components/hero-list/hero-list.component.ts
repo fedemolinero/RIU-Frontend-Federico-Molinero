@@ -10,8 +10,6 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatListModule } from '@angular/material/list';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { BehaviorSubject, combineLatest } from 'rxjs';
-import { map, startWith } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hero-list',
@@ -34,7 +32,6 @@ export class HeroListComponent implements OnInit {
   isLoading$ = this.loadingService.isLoading$;
   noHeroesMessage = '';
   noSearchResultsMessage = '';
-  searchQuery$ = new BehaviorSubject<string>('');
 
   constructor(
     private heroService: HeroService,
@@ -42,25 +39,19 @@ export class HeroListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    combineLatest([
-      this.heroService.getHeroes(),
-      this.searchQuery$.pipe(startWith('')),
-    ])
-      .pipe(
-        map(([heroes, query]) =>
-          heroes.filter((hero) =>
-            hero.name.toLowerCase().includes(query.toLowerCase())
-          )
-        )
-      )
-      .subscribe((filteredHeroes) => {
-        this.filteredHeroes = filteredHeroes;
-        this.noHeroesMessage = filteredHeroes.length === 0 ? 'No heroes available.' : '';
-      });
+    this.heroService.getHeroes().subscribe((heroes) => {
+      this.heroes = heroes;
+      this.filteredHeroes = heroes;
+      this.noHeroesMessage = heroes.length === 0 ? 'No heroes available.' : '';
+    });
   }
 
   filterHeroes(): void {
-    this.searchQuery$.next(this.searchQuery);
+    this.filteredHeroes = this.heroService.searchHeroes(this.searchQuery);
+    this.noSearchResultsMessage =
+      this.filteredHeroes.length === 0 && this.searchQuery
+        ? 'No heroes match your search.'
+        : '';
   }
 
   deleteHero(id: number): void {
