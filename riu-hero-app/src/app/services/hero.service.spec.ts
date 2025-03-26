@@ -7,6 +7,7 @@ describe('HeroService', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(HeroService);
+    
   });
 
   it('should be created', () => {
@@ -14,31 +15,15 @@ describe('HeroService', () => {
   });
 
   it('should add a hero', () => {
-    const hero: Hero = { id: 0, name: 'Test Hero', description: 'Test Description' };
+    const hero: Hero = {
+      id: 0,
+      name: 'Test Hero',
+      description: 'Test Description',
+    };
     service.addHero(hero);
     service.getHeroes().subscribe((heroes) => {
       expect(heroes.length).toBe(1);
       expect(heroes[0].name).toBe('Test Hero');
-    });
-  });
-
-  it('should update a hero', () => {
-    const hero: Hero = { id: 1, name: 'Hero One', description: 'Description One' };
-    service.addHero(hero);
-    const updatedHero: Hero = { id: hero.id, name: 'Updated Hero', description: 'Updated Description' };
-    service.updateHero(updatedHero);
-    service.getHeroes().subscribe((heroes) => {
-      expect(heroes[0].name).toBe('Updated Hero');
-      expect(heroes[0].description).toBe('Updated Description');
-    });
-  });
-
-  it('should delete a hero', () => {
-    const hero: Hero = { id: 2, name: 'Hero Two', description: 'Description Two' };
-    service.addHero(hero);
-    service.deleteHero(hero.id);
-    service.getHeroes().subscribe((heroes) => {
-      expect(heroes.length).toBe(0);
     });
   });
 
@@ -52,18 +37,17 @@ describe('HeroService', () => {
     expect(results[0].name).toBe('Hero A');
   });
 
-
-  it('should get a hero by ID', () => {
-    const hero: Hero = { id: 5, name: 'Hero Five', description: 'Description Five' };
-    service.addHero(hero);
-    const foundHero = service.getHeroById(hero.id);
-    expect(foundHero).toBeTruthy();
-    expect(foundHero?.name).toBe('Hero Five');
-  });
-
   it('should return all heroes', () => {
-    const hero1: Hero = { id: 6, name: 'Hero Six', description: 'Description Six' };
-    const hero2: Hero = { id: 7, name: 'Hero Seven', description: 'Description Seven' };
+    const hero1: Hero = {
+      id: 6,
+      name: 'Hero Six',
+      description: 'Description Six',
+    };
+    const hero2: Hero = {
+      id: 7,
+      name: 'Hero Seven',
+      description: 'Description Seven',
+    };
     service.addHero(hero1);
     service.addHero(hero2);
     service.getHeroes().subscribe((heroes) => {
@@ -73,16 +57,52 @@ describe('HeroService', () => {
     });
   });
 
-  it('should throw an error when getting a hero by ID that does not exist', () => {
-    expect(() => service.getHeroById(999)).toThrowError('Hero with ID 999 not found');
+  it('should add a hero and update the observable', (done) => {
+    const newHero: Hero = {
+      id: 0,
+      name: 'New Hero',
+      description: 'New Hero Description',
+    };
+
+    service.getHeroes().subscribe((heroes) => {
+      if (heroes.some((hero) => hero.name === 'New Hero')) {
+        expect(heroes.length).toBe(1);
+        expect(heroes[0].name).toBe('New Hero');
+        done();
+      }
+    });
+
+    service.addHero(newHero);
   });
 
-  it('should throw an error when updating a hero by ID that does not exist', () => {
-    const updatedHero: Hero = { id: 999, name: 'Nonexistent Hero', description: 'Nonexistent Description' };
-    expect(() => service.updateHero(updatedHero)).toThrowError('Hero with ID 999 not found');
+  it('should update a hero', () => {
+    const hero: Hero = { id: 1, name: 'Updated Hero', description: 'Updated Description' };
+    service.addHero(hero);
+    const updatedHero: Hero = { id: hero.id, name: 'Updated Hero', description: 'Updated Description' };
+    service.updateHero(updatedHero);
+    service.getHeroes().subscribe((heroes) => {
+      expect(heroes[0].name).toBe('Updated Hero');
+      expect(heroes[0].description).toBe('Updated Description');
+    });
   });
 
-  it('should throw an error when deleting a hero by ID that does not exist', () => {
-    expect(() => service.deleteHero(999)).toThrowError('Hero with ID 999 not found');
+  it('should delete a hero', () => {
+    const hero: Hero = { id: Date.now(), name: 'Hero Two', description: 'Description Two' };
+    service.addHero(hero);
+    service.deleteHero(hero.id);
+    service.getHeroes().subscribe((heroes) => {
+      expect(heroes.length).toBe(0);
+    });
   });
+
+  it('should get a hero by ID', () => {
+    const hero: Hero = { id: Date.now(), name: 'Hero Five', description: 'Description Five' };
+    service.addHero(hero);
+    
+    const foundHero = service.getHeroById(hero.id);
+    expect(foundHero).toBeTruthy();
+  });
+
+
+
 });

@@ -11,7 +11,6 @@ export interface Hero {
   providedIn: 'root',
 })
 export class HeroService {
-
   private readonly initialHeroes: ReadonlyArray<Hero> = [
     // Example heroes can be uncommented for testing
     // { id: 0, name: 'Test Hero', description: 'Test Description' },
@@ -27,11 +26,8 @@ export class HeroService {
   }
 
   // Finds a hero by ID or throws an error if not found
-  getHeroById(id: number): Hero {
+  getHeroById(id: number): Hero | undefined{
     const hero = this.heroes.find((hero) => hero.id === id);
-    if (!hero) {
-      throw new Error(`Hero with ID ${id} not found`);
-    }
     return hero;
   }
 
@@ -43,21 +39,14 @@ export class HeroService {
 
   // Updates an existing hero by ID
   updateHero(updatedHero: Hero): void {
-    const index = this.heroes.findIndex((hero) => hero.id === updatedHero.id);
-    if (index === -1) {
-      throw new Error(`Hero with ID ${updatedHero.id} not found`);
-    }
+    const index = this.heroes.findIndex((h) => h.id === updatedHero.id);
     this.heroes[index] = updatedHero;
-    this.heroesSubject.next(this.heroes);
+    this.heroesSubject.next(this.heroes); // Emit updated list
   }
 
   // Deletes a hero by ID
   deleteHero(id: number): void {
-    const initialLength = this.heroes.length;
     this.heroes = this.heroes.filter((hero) => hero.id !== id);
-    if (this.heroes.length === initialLength) {
-      throw new Error(`Hero with ID ${id} not found`);
-    }
     this.heroesSubject.next(this.heroes);
   }
 
@@ -68,5 +57,4 @@ export class HeroService {
       hero.name.toLowerCase().includes(lowerCaseQuery)
     );
   }
-
 }
