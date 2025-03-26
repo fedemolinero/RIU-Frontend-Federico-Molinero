@@ -1,50 +1,83 @@
 # RIU-Frontend-Federico-Molinero
-Challenge
 
-# Desarrollar, utilizando Angular, una aplicación SPA que permita hacer un mantenimiento de súper héroes: 
+# RiuHeroApp
 
-## Se deberá crear una serie de servicios que permitan:
-• Registrar un nuevo super heroe.
-• Consultar todos los súper héroes.
-• Consultar un único súper héroe por id.
-• Consultar todos los súper héroes que contienen, en su nombre, el valor de un parámetro enviado en la petición. 
-Por ejemplo, si enviamos “man” devolverá “Spiderman”, “Superman”, “Manolito el fuerte”, etc.
-• Modificar un súper héroe.
-• Eliminar un súper héroe.
-• Test unitario de este servicio. 
+_"Heroes are made by the path they choose, not the powers they are graced with."_ – Iron Man
 
-## Se deberá crear un Componente que, a partir del servicio anterior:
-• Mostrará una lista paginada de héroes donde aparecerán botones de añadir,
-editar y borrar.
-• Encima de esta lista paginada, se mostrará un input para filtrar por el héroe
-seleccionado.
-• Al pulsar el botón de añadir se generará un formulario vacío con las
-validaciones que se estimen oportunas. Después de dar de alta el nuevo
-héroe se volverá a la lista paginada.
-• Al pulsar el botón de edición se generará un formulario con los datos del
-héroe seleccionado y se permitirá modificar su información. Una vez editado
-se deberá volver a la lista paginada.
-• Al pulsar el botón de borrar, se preguntará si se está seguro que se desea
-borrar el héroe y, al confirmarlo, lo borrará.
-• Test unitario de este componente. 
+Welcome to **RiuHeroApp**, a web application built with Angular to celebrate the spirit of heroes. This project is designed to provide a platform for exploring and interacting with hero-related content.
 
+## Getting Started
 
-## Puntos a tener en cuenta: 
-• Se debe utilizar la última versión LTS de Angular y de cualquier librería que se use en el
-proyecto. 
-• La información de súper héroes se guardará dentro del servicio. (No hace falta un backend).
-• Se valorarán las soluciones propuestas para cada punto, el modelo de datos y formato del código.
-• La prueba se debe presentar en un repositorio de Git. Se sugiere ser ordenado
-y descriptivos con los commits. Al momento de la entrega indicar el Repositorio.
+### Prerequisites
 
-## Puntos opcionales de mejora: 
-• Se puede utilizar Angular Material.
-• Rutas y navegación de la página.
-• Interceptor para mostrar un elemento “loading” mientras se realiza alguna operación como “borrado” o “edición”.
-• Directiva para que al crear o editar en la caja de texto del nombre del héroe, siempre se muestre en mayúscula.
-• Comunicación entre componentes orientada a eventos.
+Ensure you have the following installed:
+- Node.js (v22 or later)
+- Angular CLI (v18.0.0)
 
-## Se valorará positivamente: 
-• Cómo se construye el modelo de datos.
-• Uso de programación reactiva.
-• Código legible usando lambdas.
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone <repository-url>
+   cd riu-hero-app
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm start
+   ```
+
+4. Open your browser and navigate to:
+   ```
+   http://localhost:4200/
+   ```
+
+## Build and Deployment
+
+To build the project for production:
+```bash
+npm run build-prod
+```
+
+The build artifacts will be stored in the `dist/` directory. You can deploy these files to any web server.
+
+## Docker Support
+
+Build and run the application using Docker:
+1. Build the Docker image:
+   ```bash
+   docker build -t riu-hero-app .
+   ```
+
+2. Run the Docker container:
+   ```bash
+   docker run -p 80:80 -p 3000:3000 riu-hero-app
+   ```
+
+Access the application at `http://localhost:8080`.
+
+## Testing
+
+### Unit Tests
+Run unit tests with Karma:
+```bash
+npm test
+```
+
+## Manual / Documentation
+
+_"With great power comes great responsibility."_ – Uncle Ben, *Spider-Man*
+
+## Contributing
+
+Contributions are welcome! Please fork the repository and submit a pull request.
+
+## License
+
+_"The best things in life are free, just like this project. 
+Use it, learn from it, and let it inspire your own heroic journey."_  
