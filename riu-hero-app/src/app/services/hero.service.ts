@@ -13,9 +13,9 @@ export interface Hero {
 export class HeroService {
   private readonly initialHeroes: ReadonlyArray<Hero> = [
     // Example heroes can be uncommented for testing
-    // { id: 0, name: 'Test Hero', description: 'Test Description' },
-    // { id: 1, name: 'Test Hero 1', description: 'Test Description 1' },
-    // { id: 2, name: 'Test Hero 2', description: 'Test Description 2' },
+    // { id: 1, name: 'Test Hero', description: 'Test Description' },
+    // { id: 2, name: 'Test Hero 1', description: 'Test Description 1' },
+    // { id: 3, name: 'Test Hero 2', description: 'Test Description 2' },
   ];
   private heroes: Hero[] = [...this.initialHeroes];
   private heroesSubject = new BehaviorSubject<Hero[]>(this.heroes);

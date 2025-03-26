@@ -10,7 +10,6 @@ body {
     font-family: Roboto, "Helvetica Neue", sans-serif;
 }
 
-
 .d-flex {
     display: flex;
 }
@@ -29,4 +28,19 @@ body {
 
 .pad-1 {
     padding: 1rem;
+}
+
+.full-width{
+    width: 100%;
+}
+
+.top-menu {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 1rem;
+}
+
+.justify-content-center {
+    justify-content: center;
 }

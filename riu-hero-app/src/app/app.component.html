@@ -1,11 +1,16 @@
 <header class="header bg-primary text-white text-center pad-1">
-    <h2>RIU Hero App</h2>
+    <nav class="top-menu">
+        <button mat-fab routerLink="/" flat color="blue" aria-label="Home">
+            <mat-icon>home</mat-icon> 
+        </button>
+        <h5>RIU Hero App</h5>
+    </nav>
 </header>
 <main>
     <section aria-label="Main Content">
         <router-outlet></router-outlet>
     </section>
 </main>
-<footer>
+<footer class="d-flex justify-content-center bg-primary text-white text-center ">
     <p>&copy; 2025 RIU Hero App.</p>
 </footer>

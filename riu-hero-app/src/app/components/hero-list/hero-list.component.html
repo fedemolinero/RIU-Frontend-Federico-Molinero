@@ -4,14 +4,41 @@
   </div>
 
   <div class="card">
+
     <div class="actions">
-      <button mat-raised-button color="primary" routerLink="/add-hero">Add Hero</button>
-      <mat-form-field appearance="outline">
-        <mat-label>Search heroes</mat-label>
-        <input matInput type="text" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
-      </mat-form-field>
+      <button mat-fab extended color="primary" routerLink="/add-hero">
+        <mat-icon>add</mat-icon>
+        Add Hero
+      </button>
     </div>
 
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Search heroes</mat-label>
+      <input matInput type="text" [(ngModel)]="searchQuery" (input)="filterHeroes()" />
+    </mat-form-field>
+
+    <mat-list *ngIf="!noHeroesMessage && !noSearchResultsMessage">
+
+      <mat-list-item *ngFor="let hero of filteredHeroes" class="full-width">
+        <div class="hero-item-content">
+          <div class="hero-text">
+            <mat-icon matListItemIcon>bolt</mat-icon>
+            <span mat-line>{{ hero.name }}</span>
+          </div>
+          <div class="hero-actions">
+            <button mat-icon-button color="accent" [routerLink]="['/edit-hero', hero.id]">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button color="warn" (click)="deleteHero(hero.id)">
+              <mat-icon>delete</mat-icon>
+            </button>
+          </div>
+        </div>
+      </mat-list-item>
+
+    </mat-list>
+
+    <mat-divider></mat-divider>
     <div *ngIf="noHeroesMessage" class="notification">
       {{ noHeroesMessage }}
     </div>
@@ -20,16 +47,6 @@
       {{ noSearchResultsMessage }}
     </div>
 
-    <mat-list *ngIf="!noHeroesMessage && !noSearchResultsMessage">
-      <mat-list-item *ngFor="let hero of filteredHeroes">
-        <span mat-line>{{ hero.name }}</span>
-        <button mat-icon-button color="accent" [routerLink]="['/edit-hero', hero.id]">
-          <mat-icon>edit</mat-icon>
-        </button>
-        <button mat-icon-button color="warn" (click)="deleteHero(hero.id)">
-          <mat-icon>delete</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
+
   </div>
 </div>
