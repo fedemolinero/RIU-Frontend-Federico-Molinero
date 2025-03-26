@@ -1,19 +1,19 @@
 <div class="container">
   <div class="card">
-    <form class="d-flex flex-column pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()">
+    <form class="d-flex flex-column pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()" aria-label="Hero form">
 
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
-        <input matInput id="name" formControlName="name" type="text" uppercase />
+        <input matInput id="name" formControlName="name" type="text" uppercase aria-label="Enter hero name" />
         <mat-hint>Enter your hero name</mat-hint>
       </mat-form-field>
 
       <mat-form-field appearance="fill">
         <mat-label>Description</mat-label>
-        <textarea matInput id="description" formControlName="description"></textarea>
+        <textarea matInput id="description" formControlName="description" aria-label="Enter hero description"></textarea>
       </mat-form-field>
 
-      <button mat-fab extended color="primary" type="submit" [disabled]="heroForm.invalid">Save</button>
+      <button mat-fab extended color="primary" type="submit" [disabled]="heroForm.invalid" aria-label="Save hero">Save</button>
 
     </form>
   </div>
