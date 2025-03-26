@@ -29,7 +29,6 @@ import { switchMap, of, map } from 'rxjs';
     MatInputModule,
     CommonModule,
     UppercaseDirective,
-    MatCardModule,
     MatButtonModule,
     FormsModule,
   ],

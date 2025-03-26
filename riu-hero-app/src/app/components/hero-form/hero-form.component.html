@@ -1,6 +1,6 @@
 <div class="container">
   <div class="card">
-    <form class="d-flex flex-column vw30 pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()">
+    <form class="d-flex flex-column pad-1" [formGroup]="heroForm" (ngSubmit)="saveHero()">
 
       <mat-form-field appearance="fill">
         <mat-label>Name</mat-label>
@@ -13,7 +13,7 @@
         <textarea matInput id="description" formControlName="description"></textarea>
       </mat-form-field>
 
-      <button mat-raised-button color="primary" type="submit" [disabled]="heroForm.invalid">Save</button>
+      <button mat-fab extended color="primary" type="submit" [disabled]="heroForm.invalid">Save</button>
 
     </form>
   </div>

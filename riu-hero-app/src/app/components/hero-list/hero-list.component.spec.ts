@@ -35,7 +35,8 @@ describe('HeroListComponent', () => {
 
     await TestBed.configureTestingModule({
       imports: [
-        HeroListComponent, // Import the standalone component
+        // Import the standalone component
+        HeroListComponent, 
         MatPaginatorModule,
         MatFormFieldModule,
         MatInputModule,
@@ -48,7 +49,8 @@ describe('HeroListComponent', () => {
         BrowserAnimationsModule,
       ],
       providers: [
-        { provide: ActivatedRoute, useValue: {} }, // Mock ActivatedRoute
+        // Mock ActivatedRoute
+        { provide: ActivatedRoute, useValue: {} }, 
         { provide: HeroService, useValue: heroServiceMock },
         { provide: LoadingService, useValue: loadingServiceMock },
       ],

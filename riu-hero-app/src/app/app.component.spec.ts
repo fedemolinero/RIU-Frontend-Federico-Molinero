@@ -7,7 +7,8 @@ describe('AppComponent', () => {
     await TestBed.configureTestingModule({
       imports: [AppComponent],
       providers: [
-        { provide: ActivatedRoute, useValue: {} } // Mock ActivatedRoute
+        // Mock ActivatedRoute
+        { provide: ActivatedRoute, useValue: {} } 
       ],
     }).compileComponents();
   });
