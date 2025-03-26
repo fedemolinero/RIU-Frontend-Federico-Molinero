@@ -1,15 +1,22 @@
-import { Directive, ElementRef, HostListener } from '@angular/core';
+import { Directive, HostListener, ElementRef } from '@angular/core';
+import { NgControl } from '@angular/forms';
 
 @Directive({
-  selector: '[uppercase]',
+  selector: 'input[uppercase]',
   standalone: true,
 })
 export class UppercaseDirective {
-  constructor(public ref: ElementRef) {}
+  constructor(private el: ElementRef, private control: NgControl) {}
 
-  @HostListener('input', ['$event']) onInput(event: any) {
-    const uppercasedValue = event.target.value.toUpperCase();
-    this.ref.nativeElement.value = uppercasedValue;
-    this.ref.nativeElement.dispatchEvent(new Event('input'));
+  @HostListener('input', ['$event'])
+  onInput(event: any) {
+    const input = event.target as HTMLInputElement;
+    const uppercasedValue = input.value.toUpperCase();
+    input.value = uppercasedValue;
+
+    // Update the form control value
+    if (this.control && this.control.control) {
+      this.control.control.setValue(uppercasedValue, { emitEvent: false });
+    }
   }
 }
